@@ -253,7 +253,7 @@ export default function SallesAdminPage() {
       </div>
 
       {/* Main Container */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 space-y-6">
+      <div className="bg-white p-6 rounded-xl shadow-sm border-none space-y-6">
 
         {/* CRUD LIST TAB */}
         {activeTab === "list" && (

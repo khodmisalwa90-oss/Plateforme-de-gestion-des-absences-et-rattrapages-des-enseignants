@@ -175,7 +175,7 @@ export default function AdminAbsencesPage() {
         refreshing={isLoading}
       />
 
-      <div className="bg-white p-6 rounded-xl border-none shadow-sm hover:shadow-md transition-shadow space-y-6">
+      <div className="bg-white p-6 rounded-xl border-none shadow-sm space-y-6">
         {/* Tabs Control */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4 mb-4">
@@ -197,7 +197,7 @@ export default function AdminAbsencesPage() {
                 {/* Status Filter */}
                 <div className="w-[160px]">
                   <Select value={statusFilter} onValueChange={(val) => { setStatusFilter(val || "all"); setPage(1); }}>
-                    <SelectTrigger className="bg-white border-slate-200">
+                    <SelectTrigger className="bg-slate-50/50 border-slate-200">
                       <SelectValue placeholder="Statut" />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
@@ -213,7 +213,7 @@ export default function AdminAbsencesPage() {
                 <div className="relative w-[180px]">
                   <Input
                     type="date"
-                    className="bg-white border-slate-200 pr-9"
+                    className="bg-slate-50/50 border-slate-200 pr-9"
                     value={dateFilter}
                     onChange={(e) => { setDateFilter(e.target.value); setPage(1); }}
                   />
@@ -408,7 +408,7 @@ function AbsenceTable({ absences, isLoading, onViewDetails, onValidate, onReject
                     variant="ghost"
                     size="icon"
                     onClick={() => onViewDetails(absence)}
-                    className="text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                    className="text-slate-400 hover:text-primary hover:bg-primary/10"
                     title="Voir les détails"
                   >
                     <Eye className="h-4 w-4" />
@@ -421,7 +421,7 @@ function AbsenceTable({ absences, isLoading, onViewDetails, onValidate, onReject
                         variant="ghost"
                         size="icon"
                         onClick={() => onValidate(absence)}
-                        className="text-emerald-500 hover:text-emerald-700 hover:bg-emerald-50 border border-transparent hover:border-emerald-200"
+                        className="text-slate-400 hover:text-emerald-600 hover:bg-emerald-50"
                         title="Valider"
                       >
                         <Check className="h-4 w-4" />
@@ -430,7 +430,7 @@ function AbsenceTable({ absences, isLoading, onViewDetails, onValidate, onReject
                         variant="ghost"
                         size="icon"
                         onClick={() => onReject(absence)}
-                        className="text-rose-500 hover:text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200"
+                        className="text-slate-400 hover:text-red-600 hover:bg-red-50"
                         title="Rejeter"
                       >
                         <X className="h-4 w-4" />

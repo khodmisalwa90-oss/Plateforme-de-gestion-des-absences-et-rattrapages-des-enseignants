@@ -232,149 +232,151 @@ export default function UsersManagementPage() {
         </Dialog>
       </DashboardHeader>
 
-      <div className="flex flex-col md:flex-row gap-4 bg-white p-6 rounded-xl border-none shadow-sm">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Rechercher par nom, prénom ou email..."
-            className="pl-9 bg-slate-50 border-slate-200/80"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Select value={roleFilter} onValueChange={handleRoleChange}>
-            <SelectTrigger className="w-full sm:w-[200px] bg-slate-50 border-slate-200/80">
-              <SelectValue placeholder="Rôle" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les rôles</SelectItem>
-              <SelectItem value="etudiant">Étudiant</SelectItem>
-              <SelectItem value="enseignant">Enseignant</SelectItem>
-              <SelectItem value="administration">Administration</SelectItem>
-              <SelectItem value="admin_systeme">Admin Système</SelectItem>
-            </SelectContent>
-          </Select>
+      <div className="bg-white p-6 rounded-xl border-none shadow-sm space-y-6">
+        {/* Search and Filters */}
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between w-full">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Input
+              placeholder="Rechercher par nom, prénom ou email..."
+              className="pl-9 bg-slate-50/50 border-slate-200"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Select value={roleFilter} onValueChange={handleRoleChange}>
+              <SelectTrigger className="w-full sm:w-[200px] bg-slate-50/50 border-slate-200">
+                <SelectValue placeholder="Rôle" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous les rôles</SelectItem>
+                <SelectItem value="etudiant">Étudiant</SelectItem>
+                <SelectItem value="enseignant">Enseignant</SelectItem>
+                <SelectItem value="administration">Administration</SelectItem>
+                <SelectItem value="admin_systeme">Admin Système</SelectItem>
+              </SelectContent>
+            </Select>
 
-          <Select value={statusFilter} onValueChange={handleStatusChange}>
-            <SelectTrigger className="w-full sm:w-[150px] bg-slate-50 border-slate-200/80">
-              <SelectValue placeholder="Statut" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les statuts</SelectItem>
-              <SelectItem value="actif">Actif</SelectItem>
-              <SelectItem value="inactif">Inactif</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select value={statusFilter} onValueChange={handleStatusChange}>
+              <SelectTrigger className="w-full sm:w-[150px] bg-slate-50/50 border-slate-200">
+                <SelectValue placeholder="Statut" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous les statuts</SelectItem>
+                <SelectItem value="actif">Actif</SelectItem>
+                <SelectItem value="inactif">Inactif</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-      </div>
-
-      <div className="bg-white border-none shadow-sm rounded-xl overflow-hidden">
         {isLoading ? (
           <div className="p-8 flex justify-center">
             <LoadingSpinner />
           </div>
         ) : !data || data.items.length === 0 ? (
-          <div className="p-12 text-center text-muted-foreground">
+          <div className="p-12 text-center text-slate-500">
             <p>Aucun utilisateur trouvé.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Utilisateur</TableHead>
-                  <TableHead>Rôle</TableHead>
-                  <TableHead>Statut</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.items.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell>
-                      <div className="flex flex-col">
-                        <span className="font-semibold">{user.prenom} {user.nom}</span>
-                        <span className="text-sm text-muted-foreground">{user.email}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="bg-slate-50">
-                        {formatRole(user.role)}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {user.actif ? (
-                        <Badge variant="default" className="bg-green-500 hover:bg-green-600">Actif</Badge>
-                      ) : (
-                        <Badge variant="secondary" className="text-muted-foreground">Inactif</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => toggleStatus(user)}
-                          title={user.actif ? "Désactiver" : "Activer"}
-                          className={user.actif ? "text-amber-500 hover:text-amber-600" : "text-green-500 hover:text-green-600"}
-                        >
-                          {user.actif ? <UserX className="h-4 w-4" /> : <UserCheck className="h-4 w-4" />}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => openEditDialog(user)}
-                          className="text-blue-500 hover:text-blue-600"
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => {
-                            setUserToDelete(user.id);
-                            setIsDeleteDialogOpen(true);
-                          }}
-                          className="text-red-500 hover:text-red-600"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
+          <>
+            <div className="rounded-md border border-slate-200 overflow-hidden">
+              <Table>
+                <TableHeader className="bg-slate-50">
+                  <TableRow>
+                    <TableHead>Utilisateur</TableHead>
+                    <TableHead>Rôle</TableHead>
+                    <TableHead>Statut</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {data.items.map((user) => (
+                    <TableRow key={user.id} className="hover:bg-slate-50/50 transition-colors">
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-slate-700">{user.prenom} {user.nom}</span>
+                          <span className="text-sm text-slate-500">{user.email}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-slate-600">
+                        <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200">
+                          {formatRole(user.role)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {user.actif ? (
+                          <Badge variant="default" className="bg-green-500 hover:bg-green-600">Actif</Badge>
+                        ) : (
+                          <Badge variant="secondary" className="text-muted-foreground">Inactif</Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => toggleStatus(user)}
+                            title={user.actif ? "Désactiver" : "Activer"}
+                            className={user.actif ? "text-slate-400 hover:text-amber-600 hover:bg-amber-50" : "text-slate-400 hover:text-green-600 hover:bg-green-50"}
+                          >
+                            {user.actif ? <UserX className="h-4 w-4" /> : <UserCheck className="h-4 w-4" />}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openEditDialog(user)}
+                            className="text-slate-400 hover:text-primary hover:bg-primary/10"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              setUserToDelete(user.id);
+                              setIsDeleteDialogOpen(true);
+                            }}
+                            className="text-slate-400 hover:text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {data.total_pages > 1 && (
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-slate-500">
+                  Affichage de {((currentPage - 1) * perPage) + 1} à {Math.min(currentPage * perPage, data.total)} sur {data.total} résultats
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1 || isLoading}
+                  >
+                    Précédent
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(p => Math.min(data.total_pages, p + 1))}
+                    disabled={currentPage === data.total_pages || isLoading}
+                  >
+                    Suivant
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
-
-      {data && data.total_pages > 1 && (
-        <div className="flex items-center justify-between mt-6">
-          <p className="text-sm text-slate-500">
-            Affichage de {((currentPage - 1) * perPage) + 1} à {Math.min(currentPage * perPage, data.total)} sur {data.total} résultats
-          </p>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              disabled={currentPage === 1 || isLoading}
-            >
-              Précédent
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(p => Math.min(data.total_pages, p + 1))}
-              disabled={currentPage === data.total_pages || isLoading}
-            >
-              Suivant
-            </Button>
-          </div>
-        </div>
-      )}
 
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>

@@ -15,8 +15,6 @@ import {
   Clock,
   User,
   BookOpen,
-  ChevronLeft,
-  ChevronRight,
   Trash2
 } from "lucide-react";
 
@@ -182,228 +180,206 @@ export default function AdminRattrapagesPage() {
         refreshing={isLoading}
       />
 
-      {/* Filters Card */}
-      <div className="bg-white p-6 rounded-xl border-none shadow-sm hover:shadow-md transition-shadow space-y-4">
-        <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider font-poppins">Filtres de recherche</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="statusFilter">Statut</Label>
-            <Select value={statusFilter} onValueChange={(val) => { setStatusFilter(val || "all"); setPage(1); }}>
-              <SelectTrigger id="statusFilter" className="bg-slate-50 border-slate-200">
-                <SelectValue placeholder="Tous les statuts" />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-slate-200">
-                <SelectItem value="all">Tous les statuts</SelectItem>
-                <SelectItem value="propose">Proposé</SelectItem>
-                <SelectItem value="valide">Validé</SelectItem>
-                <SelectItem value="annule">Annulé</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+      <div className="bg-white p-6 rounded-xl border-none shadow-sm space-y-6">
+        {/* Filters */}
+        <div className="space-y-4">
+          <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider font-poppins">Filtres de recherche</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="statusFilter">Statut</Label>
+              <Select value={statusFilter} onValueChange={(val) => { setStatusFilter(val || "all"); setPage(1); }}>
+                <SelectTrigger id="statusFilter" className="bg-slate-50/50 border-slate-200">
+                  <SelectValue placeholder="Tous les statuts" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-slate-200">
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="propose">Proposé</SelectItem>
+                  <SelectItem value="valide">Validé</SelectItem>
+                  <SelectItem value="annule">Annulé</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="dateFromFilter">Depuis le</Label>
-            <Input
-              id="dateFromFilter"
-              type="date"
-              value={dateFromFilter}
-              onChange={(e) => { setDateFromFilter(e.target.value); setPage(1); }}
-              className="bg-slate-50 border-slate-200"
-            />
-          </div>
+            <div className="space-y-2">
+              <Label htmlFor="dateFromFilter">Depuis le</Label>
+              <Input
+                id="dateFromFilter"
+                type="date"
+                value={dateFromFilter}
+                onChange={(e) => { setDateFromFilter(e.target.value); setPage(1); }}
+                className="bg-slate-50/50 border-slate-200"
+              />
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="dateToFilter">Jusqu'au</Label>
-            <Input
-              id="dateToFilter"
-              type="date"
-              value={dateToFilter}
-              onChange={(e) => { setDateToFilter(e.target.value); setPage(1); }}
-              className="bg-slate-50 border-slate-200"
-            />
-          </div>
+            <div className="space-y-2">
+              <Label htmlFor="dateToFilter">Jusqu'au</Label>
+              <Input
+                id="dateToFilter"
+                type="date"
+                value={dateToFilter}
+                onChange={(e) => { setDateToFilter(e.target.value); setPage(1); }}
+                className="bg-slate-50/50 border-slate-200"
+              />
+            </div>
 
-          <div className="flex items-end">
-            <Button
-              onClick={resetFilters}
-              variant="ghost"
-              className="text-slate-500 hover:text-slate-800 hover:bg-slate-50 w-full md:w-auto"
-            >
-              Réinitialiser les filtres
-            </Button>
+            <div className="flex items-end">
+              <Button
+                onClick={resetFilters}
+                variant="ghost"
+                className="text-slate-500 hover:text-slate-800 hover:bg-slate-50 w-full md:w-auto"
+              >
+                Réinitialiser les filtres
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Table */}
-      <div className="bg-white rounded-xl border-none shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        {/* Main Table */}
         {rattrapages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 px-4">
-            <AlertCircle className="h-10 w-10 text-slate-400 mb-2" />
-            <p className="text-slate-600 font-medium">Aucun rattrapage trouvé</p>
-            <p className="text-slate-400 text-sm text-center">Modifiez vos filtres de recherche pour afficher d'autres séances.</p>
+          <div className="text-center py-16 border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+            <AlertCircle className="mx-auto h-12 w-12 text-slate-400 opacity-60 mb-3" />
+            <h3 className="font-semibold text-slate-700">Aucun rattrapage trouvé</h3>
+            <p className="text-sm text-slate-500 mt-1">Modifiez vos filtres de recherche pour afficher d'autres séances.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader className="bg-slate-50">
-                <TableRow>
-                  <TableHead className="font-semibold text-slate-700">Enseignant</TableHead>
-                  <TableHead className="font-semibold text-slate-700">Matière</TableHead>
-                  <TableHead className="font-semibold text-slate-700">Date proposée</TableHead>
-                  <TableHead className="font-semibold text-slate-700">Horaire</TableHead>
-                  <TableHead className="font-semibold text-slate-700">Salle</TableHead>
-                  <TableHead className="font-semibold text-slate-700">Statut</TableHead>
-                  <TableHead className="text-right font-semibold text-slate-700">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {rattrapages.map((rattrapage) => {
-                  const teacher = rattrapage.absence?.enseignant;
-                  return (
-                    <TableRow key={rattrapage.id} className="hover:bg-slate-50/50 transition-colors">
-                      <TableCell className="font-medium text-slate-900">
-                        <div className="flex items-center gap-2">
-                          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
-                            {teacher ? `${teacher.nom[0]}${teacher.prenom[0]}` : "?"}
+          <>
+            <div className="rounded-md border border-slate-200 overflow-hidden">
+              <Table>
+                <TableHeader className="bg-slate-50">
+                  <TableRow>
+                    <TableHead className="font-semibold text-slate-700">Enseignant</TableHead>
+                    <TableHead className="font-semibold text-slate-700">Matière</TableHead>
+                    <TableHead className="font-semibold text-slate-700">Date proposée</TableHead>
+                    <TableHead className="font-semibold text-slate-700">Horaire</TableHead>
+                    <TableHead className="font-semibold text-slate-700">Salle</TableHead>
+                    <TableHead className="font-semibold text-slate-700">Statut</TableHead>
+                    <TableHead className="text-right font-semibold text-slate-700">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {rattrapages.map((rattrapage) => {
+                    const teacher = rattrapage.absence?.enseignant;
+                    return (
+                      <TableRow key={rattrapage.id} className="hover:bg-slate-50/50 transition-colors">
+                        <TableCell className="font-medium text-slate-900">
+                          <div className="flex items-center gap-2">
+                            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                              {teacher ? `${teacher.nom[0]}${teacher.prenom[0]}` : "?"}
+                            </div>
+                            <div>
+                              <p className="font-semibold text-slate-700">{teacher ? `${teacher.nom} ${teacher.prenom}` : `ID Enseignant: ${rattrapage.absence?.enseignant_id}`}</p>
+                              <p className="text-xs text-slate-500">{teacher?.email}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="font-semibold">{teacher ? `${teacher.nom} ${teacher.prenom}` : `ID Enseignant: ${rattrapage.absence?.enseignant_id}`}</p>
-                            <p className="text-xs text-slate-400">{teacher?.email}</p>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1.5 text-slate-700">
+                        </TableCell>
+                        <TableCell className="text-slate-600 font-medium">
                           <span>{rattrapage.absence?.matiere?.nom || `ID: ${rattrapage.absence?.matiere_id}`}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1.5 text-slate-700">
+                        </TableCell>
+                        <TableCell className="text-slate-500 font-medium">
                           <span>{formatDate(rattrapage.date_proposee, false)}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1.5 text-slate-700">
+                        </TableCell>
+                        <TableCell className="text-slate-500 font-medium">
                           <span>{formatTime(rattrapage.heure_debut)} - {formatTime(rattrapage.heure_fin)}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1.5 text-slate-700 font-medium">
+                        </TableCell>
+                        <TableCell className="text-slate-700 font-semibold">
                           <span>{rattrapage.salle?.nom || `Salle: ${rattrapage.salle_id}`}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <RattrapageStatusBadge status={rattrapage.statut} />
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end items-center gap-2">
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => handleOpenDetails(rattrapage)}
-                            title="Détails"
-                            className="hover:bg-slate-100 text-slate-500 hover:text-slate-800"
-                          >
-                            <Eye size={16} />
-                          </Button>
-
-                          {rattrapage.statut === "propose" && (
+                        </TableCell>
+                        <TableCell>
+                          <RattrapageStatusBadge status={rattrapage.statut} />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end items-center gap-2">
                             <Button
                               size="icon"
                               variant="ghost"
-                              onClick={() => handleOpenActionConfirm(rattrapage, "validate")}
-                              title="Valider"
-                              className="hover:bg-emerald-50 text-emerald-600 hover:text-emerald-700"
+                              onClick={() => handleOpenDetails(rattrapage)}
+                              title="Détails"
+                              className="text-slate-400 hover:text-primary hover:bg-primary/10"
                             >
-                              <Check size={16} />
+                              <Eye className="h-4 w-4" />
                             </Button>
-                          )}
 
-                          {rattrapage.statut !== "annule" && (
-                            <>
+                            {rattrapage.statut === "propose" && (
                               <Button
                                 size="icon"
                                 variant="ghost"
-                                onClick={() => handleOpenRoomDialog(rattrapage)}
-                                title="Changer la salle"
-                                className="hover:bg-blue-50 text-blue-600 hover:text-blue-700"
+                                onClick={() => handleOpenActionConfirm(rattrapage, "validate")}
+                                title="Valider"
+                                className="text-slate-400 hover:text-emerald-600 hover:bg-emerald-50"
                               >
-                                <MapPin size={16} />
+                                <Check className="h-4 w-4" />
                               </Button>
+                            )}
+
+                            {rattrapage.statut !== "annule" && (
+                              <>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  onClick={() => handleOpenRoomDialog(rattrapage)}
+                                  title="Changer la salle"
+                                  className="text-slate-400 hover:text-blue-600 hover:bg-blue-50"
+                                >
+                                  <MapPin className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  onClick={() => handleOpenActionConfirm(rattrapage, "cancel")}
+                                  title="Annuler"
+                                  className="text-slate-400 hover:text-red-600 hover:bg-red-50"
+                                >
+                                  <X className="h-4 w-4" />
+                                </Button>
+                              </>
+                            )}
+                            {rattrapage.statut !== "valide" && (
                               <Button
                                 size="icon"
                                 variant="ghost"
-                                onClick={() => handleOpenActionConfirm(rattrapage, "cancel")}
-                                title="Annuler"
-                                className="hover:bg-rose-50 text-rose-600 hover:text-rose-700"
+                                onClick={() => handleOpenActionConfirm(rattrapage, "delete")}
+                                title="Supprimer"
+                                className="text-slate-400 hover:text-red-600 hover:bg-red-50"
                               >
-                                <X size={16} />
+                                <Trash2 className="h-4 w-4" />
                               </Button>
-                            </>
-                          )}
-                          {rattrapage.statut !== "valide" && (
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              onClick={() => handleOpenActionConfirm(rattrapage, "delete")}
-                              title="Supprimer"
-                              className="hover:bg-rose-50 text-rose-600 hover:text-rose-700"
-                            >
-                              <Trash2 size={16} />
-                            </Button>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </div>
-        )}
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between border-t border-slate-100 px-6 py-4 bg-white">
-            <div className="text-xs text-slate-500">
-              Affichage de <span className="font-semibold text-slate-700">{rattrapages.length}</span> sur{" "}
-              <span className="font-semibold text-slate-700">{total}</span> propositions.
-            </div>
-            <div className="flex items-center gap-1">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="gap-1"
-              >
-                <ChevronLeft size={16} />
-                <span>Précédent</span>
-              </Button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                <Button
-                  key={p}
-                  variant={p === page ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setPage(p)}
-                  className="w-9"
-                >
-                  {p}
-                </Button>
-              ))}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="gap-1"
-              >
-                <span>Suivant</span>
-                <ChevronRight size={16} />
-              </Button>
-            </div>
-          </div>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-slate-500">
+                  Affichage de {((page - 1) * perPage) + 1} à {Math.min(page * perPage, total)} sur {total} propositions
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                  >
+                    Précédent
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                  >
+                    Suivant
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
