@@ -312,6 +312,74 @@ departements ──► matieres (1→N)
 
 ---
 
+### `POST /auth/forgot-password`
+**Description:** Generates a secure random reset token, hashes it, saves it to the user database with a 1-hour expiration time, and sends a reset link email to the user.
+
+**Access:** Public — no token required.
+
+**Request Body** (`application/json`):
+```json
+{
+  "email": "j.dupont@univ.com"
+}
+```
+
+**Response 200:**
+```json
+{
+  "message": "Si l'adresse email existe, un lien de réinitialisation a été envoyé."
+}
+```
+
+---
+
+### `GET /auth/verify-reset-token`
+**Description:** Validates if a password reset token is valid and not yet expired. Used by the frontend reset password page to verify the token on page load.
+
+**Access:** Public — no token required.
+
+**Query Parameters:**
+
+| Param | Type | Required | Description |
+|---|---|---|---|
+| `token` | string | Yes | The unhashed raw reset token |
+
+**Response 200:**
+```json
+{
+  "status": "valid",
+  "email": "j.dupont@univ.com"
+}
+```
+
+**Error 400:** `{"detail": "Le jeton de réinitialisation est invalide ou a expiré."}`
+
+---
+
+### `POST /auth/reset-password`
+**Description:** Verifies the reset token, updates the user's password to the new password, and clears the reset token hash and expiration.
+
+**Access:** Public — no token required.
+
+**Request Body** (`application/json`):
+```json
+{
+  "token": "raw_token_here",
+  "nouveau_mot_de_passe": "newpassword123"
+}
+```
+
+**Response 200:**
+```json
+{
+  "message": "Votre mot de passe a été réinitialisé avec succès."
+}
+```
+
+**Error 400:** `{"detail": "Le jeton de réinitialisation est invalide ou a expiré."}`
+
+---
+
 ## 2. Users (`/api/v1/users`)
 
 > Most endpoints restricted to `admin_systeme` only. The `administration` role can list students.

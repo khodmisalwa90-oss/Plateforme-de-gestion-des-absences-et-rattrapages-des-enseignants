@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useSession, signOut } from "next-auth/react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import Image from "next/image";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -82,11 +83,18 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const renderContent = () => (
     <>
       {/* Brand Header */}
-      <div className="p-6 border-b border-slate-800 flex items-center justify-between">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="font-poppins font-bold text-xl tracking-tight">
-            Lo<span className="text-primary-light">Go</span>
-          </span>
+      <div className="h-20 border-b border-slate-800 flex items-center justify-center">
+        <Link href="/dashboard" className="transition-all duration-300 hover:scale-105 hover:opacity-95 block">
+          <div className="p-1.5 flex items-center justify-center">
+            <Image 
+              src="/logo.png" 
+              alt="Logo" 
+              width={80} 
+              height={80} 
+              className="object-contain"
+              priority
+            />
+          </div>
         </Link>
       </div>
 

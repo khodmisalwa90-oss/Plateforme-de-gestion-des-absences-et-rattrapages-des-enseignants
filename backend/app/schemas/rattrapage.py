@@ -1,29 +1,29 @@
 from typing import Optional
 from datetime import date, time, datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from app.schemas.enums import StatutRattrapage
 from app.schemas.absence import AbsenceSimple
 from app.schemas.salle import SalleSimple
 from app.schemas.utilisateur import UtilisateurSimple
 
 class RattrapageBase(BaseModel):
-    absence_id: int
-    salle_id: int
-    date_proposee: date
-    heure_debut: time
-    heure_fin: time
+    absence_id: int = Field(..., description="Identifiant de l'absence")
+    salle_id: int = Field(..., description="Identifiant de la salle")
+    date_proposee: date = Field(..., description="Date du rattrapage")
+    heure_debut: time = Field(..., description="Heure de début")
+    heure_fin: time = Field(..., description="Heure de fin")
 
 class RattrapageCreate(RattrapageBase):
     pass
 
 class RattrapageUpdate(BaseModel):
-    absence_id: Optional[int] = None
-    salle_id: Optional[int] = None
-    date_proposee: Optional[date] = None
-    heure_debut: Optional[time] = None
-    heure_fin: Optional[time] = None
-    statut: Optional[StatutRattrapage] = None
-    valide_par: Optional[int] = None
+    absence_id: Optional[int] = Field(None, description="Identifiant de l'absence")
+    salle_id: Optional[int] = Field(None, description="Identifiant de la salle")
+    date_proposee: Optional[date] = Field(None, description="Date du rattrapage")
+    heure_debut: Optional[time] = Field(None, description="Heure de début")
+    heure_fin: Optional[time] = Field(None, description="Heure de fin")
+    statut: Optional[StatutRattrapage] = Field(None, description="Statut du rattrapage")
+    valide_par: Optional[int] = Field(None, description="Identifiant du validateur")
 
 class RattrapageSimple(RattrapageBase):
     id: int

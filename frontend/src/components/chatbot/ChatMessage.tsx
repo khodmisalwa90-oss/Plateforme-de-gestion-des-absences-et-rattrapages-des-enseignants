@@ -79,7 +79,7 @@ export default function ChatMessage({
                 Cette action va modifier vos données. Confirmez-vous ?
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <Button
                 size="sm"

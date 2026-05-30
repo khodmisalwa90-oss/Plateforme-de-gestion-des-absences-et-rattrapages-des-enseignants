@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { 
+import {
   RefreshCw,
 } from "lucide-react";
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid, Pie, PieChart, Cell, Label } from "recharts";
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
 
       {/* Main visual metric rings - replaces old text cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Users Donut */}
         <Card className="border-none shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
           <CardHeader className="pb-2">
@@ -245,7 +245,7 @@ export default function AdminDashboard() {
                 </PieChart>
               </ChartContainer>
             </div>
-            
+
             <div className="w-full sm:w-1/2 space-y-3">
               {usersPieData.map((item) => {
                 const config = usersPieConfig[item.name as keyof typeof usersPieConfig];
@@ -308,7 +308,7 @@ export default function AdminDashboard() {
                 </PieChart>
               </ChartContainer>
             </div>
-            
+
             <div className="w-full sm:w-1/2 space-y-3">
               {absencesPieData.map((item) => {
                 const config = absencesPieConfig[item.name as keyof typeof absencesPieConfig];
@@ -371,7 +371,7 @@ export default function AdminDashboard() {
                 </PieChart>
               </ChartContainer>
             </div>
-            
+
             <div className="w-full sm:w-1/2 space-y-3">
               {rattrapagesPieData.map((item) => {
                 const config = rattrapagesPieConfig[item.name as keyof typeof rattrapagesPieConfig];
@@ -401,7 +401,7 @@ export default function AdminDashboard() {
             <CardTitle className="text-lg font-bold text-slate-800">Activité Mensuelle Globale</CardTitle>
             <CardDescription className="text-xs">Comparaison chronologique entre absences signalées et séances de rattrapage programmées</CardDescription>
           </div>
-          
+
           <div className="flex gap-4 text-xs font-semibold text-slate-500 self-start sm:self-auto pt-1 sm:pt-0">
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-sm bg-primary shrink-0" />
@@ -413,7 +413,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent>
           {activityChartData.length > 0 ? (
             <ChartContainer config={activityChartConfig} className="h-[280px] w-full">
@@ -441,7 +441,7 @@ export default function AdminDashboard() {
           <CardDescription className="text-xs">Ressources allouées et volume de planification hebdomadaire</CardDescription>
         </CardHeader>
         <CardContent className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
-          
+
           {/* Horizontal comparison bar chart */}
           <div className="lg:col-span-6 flex flex-col justify-center">
             <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Volume comparatif</h3>
@@ -463,7 +463,7 @@ export default function AdminDashboard() {
 
           {/* Interactive resource indicators */}
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            
+
             {/* Salles */}
             <div className="p-4 bg-slate-50/50 rounded-2xl flex flex-col justify-between border border-slate-100 hover:bg-slate-50 transition-colors">
               <div className="flex items-center justify-between">

@@ -26,7 +26,7 @@ function timeToMinutes(t: string): number {
 function getCardHeightUnits(course: EmploiDuTempsResponse, spannedSlots: typeof DEFAULT_TIME_SLOTS) {
   const cStart = timeToMinutes(course.heure_debut);
   const cEnd = timeToMinutes(course.heure_fin);
-  
+
   if (spannedSlots.length === 0) return 1;
   if (spannedSlots.length === 1) {
     const sStart = timeToMinutes(spannedSlots[0].start);
@@ -36,25 +36,25 @@ function getCardHeightUnits(course: EmploiDuTempsResponse, spannedSlots: typeof 
     const occupied = Math.min(cEnd, sEnd) - Math.max(cStart, sStart);
     return Math.max(0.1, occupied / total);
   }
-  
+
   const fStart = timeToMinutes(spannedSlots[0].start);
   const fEnd = timeToMinutes(spannedSlots[0].end);
   const fTotal = fEnd - fStart;
   const fOccupied = Math.min(cEnd, fEnd) - Math.max(cStart, fStart);
   const fRatio = fTotal > 0 ? Math.max(0, fOccupied / fTotal) : 1;
-  
+
   const lSlot = spannedSlots[spannedSlots.length - 1];
   const lStart = timeToMinutes(lSlot.start);
   const lEnd = timeToMinutes(lSlot.end);
   const lTotal = lEnd - lStart;
   const lOccupied = Math.min(cEnd, lEnd) - Math.max(cStart, lStart);
   const lRatio = lTotal > 0 ? Math.max(0, lOccupied / lTotal) : 1;
-  
+
   let intermediateSum = 0;
   for (let i = 1; i < spannedSlots.length - 1; i++) {
     intermediateSum += 1;
   }
-  
+
   return fRatio + intermediateSum + lRatio;
 }
 
@@ -153,21 +153,21 @@ export function WeeklyTimetable({
             <h2 className="text-lg md:text-xl font-bold text-slate-900 print:text-black">
               Institut Supérieur des Études Technologiques de Tozeur
             </h2>
-            
+
             <div className="w-full max-w-3xl h-[2px] bg-slate-800 my-4 print:bg-black"></div>
-            
+
             <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight print:text-black">
               {title}
             </h1>
-            
+
             <div className="w-full max-w-3xl h-[2px] bg-slate-800 my-4 print:bg-black"></div>
-            
+
             {subtitle && (
               <p className="text-base md:text-lg font-bold text-slate-800 mb-1 print:text-black">
                 {subtitle}
               </p>
             )}
-            
+
             <p className="text-sm font-semibold text-slate-600 print:text-black">
               Emploi du temps
             </p>
@@ -219,7 +219,7 @@ export function WeeklyTimetable({
                           displayedDays.forEach((d) => {
                             const cellData = timetableGrid[slotIdx]?.[d];
                             let state: 'render_false' | 'free_pause' | 'occupied' = 'free_pause';
-                            
+
                             if (!cellData || !cellData.render) {
                               state = 'render_false';
                             } else if (cellData.courses.length > 0) {
@@ -238,20 +238,19 @@ export function WeeklyTimetable({
                             if (seg.state === 'render_false') {
                               return null;
                             }
-                            
+
                             if (seg.state === 'occupied') {
                               const d = seg.days[0];
                               const cellData = timetableGrid[slotIdx]?.[d];
                               const cellCourses = cellData.courses || [];
                               const hasConflict = cellCourses.length > 1;
-                              
+
                               return (
                                 <td
                                   key={`occupied-${d}`}
                                   rowSpan={cellData.rowSpan > 1 ? cellData.rowSpan : undefined}
-                                  className={`p-2 border-r border-slate-100 last:border-r-0 align-top ${cellData.rowSpan === 1 ? 'h-28' : ''} ${
-                                    hasConflict ? "bg-red-50/10" : ""
-                                  }`}
+                                  className={`p-2 border-r border-slate-100 last:border-r-0 align-top ${cellData.rowSpan === 1 ? 'h-28' : ''} ${hasConflict ? "bg-red-50/10" : ""
+                                    }`}
                                 >
                                   {hasConflict && (
                                     <div className="flex items-center gap-1 text-[10px] text-red-600 font-semibold bg-red-50 px-1.5 py-0.5 rounded border border-red-100 mb-1">
@@ -259,33 +258,32 @@ export function WeeklyTimetable({
                                       <span className="truncate">Conflit ({cellCourses.length})</span>
                                     </div>
                                   )}
-                                  
+
                                   {cellCourses.map((course) => {
                                     const formatCardTime = (t: string) => {
                                       if (!t) return "";
                                       const parts = t.split(":");
                                       return `${parts[0].padStart(2, "0")}h${parts[1].padStart(2, "0")}`;
                                     };
-                                    
+
                                     const spannedSlots = DEFAULT_TIME_SLOTS.slice(slotIdx, slotIdx + cellData.rowSpan);
                                     const heightUnits = getCardHeightUnits(course, spannedSlots);
                                     const cardHeight = `calc(var(--row-height, 7rem) * ${heightUnits} + ${Math.floor(heightUnits) - 1}px - 1rem)`;
-                                    
+
                                     const firstSlot = DEFAULT_TIME_SLOTS[slotIdx];
                                     const lastSlot = DEFAULT_TIME_SLOTS[slotIdx + cellData.rowSpan - 1];
-                                    const isExactMatch = 
-                                      formatCardTime(course.heure_debut) === formatCardTime(firstSlot?.start || "") && 
+                                    const isExactMatch =
+                                      formatCardTime(course.heure_debut) === formatCardTime(firstSlot?.start || "") &&
                                       formatCardTime(course.heure_fin) === formatCardTime(lastSlot?.end || "");
-                                    
+
                                     return (
                                       <div
                                         key={course.id}
                                         style={{ height: cardHeight, minHeight: cardHeight }}
-                                        className={`course-card p-2.5 rounded-lg border text-left shadow-sm transition-all duration-200 relative group flex flex-col ${
-                                          course.rattrapage_id
-                                            ? "bg-amber-50/70 border-amber-200 hover:bg-amber-50"
-                                            : "bg-blue-50/40 border-blue-100 hover:bg-blue-50/60"
-                                        } mb-1.5 last:mb-0`}
+                                        className={`course-card p-2.5 rounded-lg border text-left shadow-sm transition-all duration-200 relative group flex flex-col ${course.rattrapage_id
+                                          ? "bg-amber-50/70 border-amber-200 hover:bg-amber-50"
+                                          : "bg-blue-50/40 border-blue-100 hover:bg-blue-50/60"
+                                          } mb-1.5 last:mb-0`}
                                       >
                                         {(onEdit || onDelete) && (
                                           <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
@@ -316,14 +314,14 @@ export function WeeklyTimetable({
                                               ? `${course.matiere?.nom || "Matière"} (${course.groupe?.nom || "Groupe"})`
                                               : course.matiere?.nom || "Matière inconnue"}
                                         </div>
-                                        
+
                                         {!isExactMatch && (
                                           <div className="flex items-center gap-1.5 text-[10px] md:text-[11px] font-semibold text-blue-700/80 mt-1">
                                             <Clock size={11} className="shrink-0" />
                                             <span>{formatCardTime(course.heure_debut)} - {formatCardTime(course.heure_fin)}</span>
                                           </div>
                                         )}
-                                        
+
                                         <div className="flex items-center gap-1.5 text-[10px] md:text-xs text-slate-500 mt-1.5 font-medium flex-1">
                                           <UserRound size={12} className="shrink-0 text-slate-400" />
                                           <span className="truncate">
@@ -332,7 +330,7 @@ export function WeeklyTimetable({
                                               : "Non assigné"}
                                           </span>
                                         </div>
-                                        
+
                                         <div className="flex flex-wrap items-center justify-between gap-1.5 mt-2.5">
                                           <Badge
                                             variant="outline"
@@ -341,7 +339,7 @@ export function WeeklyTimetable({
                                             <MapPin size={10} className="text-slate-400" />
                                             <span className="truncate max-w-[90px]">{course.salle?.nom || "N/A"}</span>
                                           </Badge>
-                                          
+
                                           {course.rattrapage_id && (
                                             <span className="text-[8px] md:text-[9px] font-bold text-amber-700 bg-amber-100/60 px-1.5 py-0.5 rounded uppercase tracking-wider">
                                               Rattrapage
@@ -354,7 +352,7 @@ export function WeeklyTimetable({
                                 </td>
                               );
                             }
-                            
+
                             return (
                               <td
                                 key={`free-${segIdx}`}
@@ -381,9 +379,8 @@ export function WeeklyTimetable({
                             <td
                               key={dayIdx}
                               rowSpan={cellData.rowSpan > 1 ? cellData.rowSpan : undefined}
-                              className={`p-2 border-r border-slate-100 last:border-r-0 align-top ${cellData.rowSpan === 1 ? 'h-28' : ''} ${
-                                hasConflict ? "bg-red-50/10" : ""
-                              }`}
+                              className={`p-2 border-r border-slate-100 last:border-r-0 align-top ${cellData.rowSpan === 1 ? 'h-28' : ''} ${hasConflict ? "bg-red-50/10" : ""
+                                }`}
                             >
                               {hasConflict && (
                                 <div className="flex items-center gap-1 text-[10px] text-red-600 font-semibold bg-red-50 px-1.5 py-0.5 rounded border border-red-100 mb-1">
@@ -398,26 +395,25 @@ export function WeeklyTimetable({
                                   const parts = t.split(":");
                                   return `${parts[0].padStart(2, "0")}h${parts[1].padStart(2, "0")}`;
                                 };
-                                
+
                                 const spannedSlots = DEFAULT_TIME_SLOTS.slice(slotIdx, slotIdx + cellData.rowSpan);
                                 const heightUnits = getCardHeightUnits(course, spannedSlots);
                                 const cardHeight = `calc(var(--row-height, 7rem) * ${heightUnits} + ${Math.floor(heightUnits) - 1}px - 1rem)`;
-                                
+
                                 const firstSlot = DEFAULT_TIME_SLOTS[slotIdx];
                                 const lastSlot = DEFAULT_TIME_SLOTS[slotIdx + cellData.rowSpan - 1];
-                                const isExactMatch = 
-                                  formatCardTime(course.heure_debut) === formatCardTime(firstSlot?.start || "") && 
+                                const isExactMatch =
+                                  formatCardTime(course.heure_debut) === formatCardTime(firstSlot?.start || "") &&
                                   formatCardTime(course.heure_fin) === formatCardTime(lastSlot?.end || "");
-                                
+
                                 return (
                                   <div
                                     key={course.id}
                                     style={{ height: cardHeight, minHeight: cardHeight }}
-                                    className={`course-card p-2.5 rounded-lg border text-left shadow-sm transition-all duration-200 relative group flex flex-col ${
-                                      course.rattrapage_id
-                                        ? "bg-amber-50/70 border-amber-200 hover:bg-amber-50"
-                                        : "bg-blue-50/40 border-blue-100 hover:bg-blue-50/60"
-                                    } mb-1.5 last:mb-0`}
+                                    className={`course-card p-2.5 rounded-lg border text-left shadow-sm transition-all duration-200 relative group flex flex-col ${course.rattrapage_id
+                                      ? "bg-amber-50/70 border-amber-200 hover:bg-amber-50"
+                                      : "bg-blue-50/40 border-blue-100 hover:bg-blue-50/60"
+                                      } mb-1.5 last:mb-0`}
                                   >
                                     {(onEdit || onDelete) && (
                                       <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
@@ -448,14 +444,14 @@ export function WeeklyTimetable({
                                           ? `${course.matiere?.nom || "Matière"} (${course.groupe?.nom || "Groupe"})`
                                           : course.matiere?.nom || "Matière inconnue"}
                                     </div>
-                                    
+
                                     {!isExactMatch && (
                                       <div className="flex items-center gap-1.5 text-[10px] md:text-[11px] font-semibold text-blue-700/80 mt-1">
                                         <Clock size={11} className="shrink-0" />
                                         <span>{formatCardTime(course.heure_debut)} - {formatCardTime(course.heure_fin)}</span>
                                       </div>
                                     )}
-                                    
+
                                     <div className="flex items-center gap-1.5 text-[10px] md:text-xs text-slate-500 mt-1.5 font-medium flex-1">
                                       <UserRound size={12} className="shrink-0 text-slate-400" />
                                       <span className="truncate">
@@ -464,7 +460,7 @@ export function WeeklyTimetable({
                                           : "Non assigné"}
                                       </span>
                                     </div>
-                                    
+
                                     <div className="flex flex-wrap items-center justify-between gap-1.5 mt-2.5">
                                       <Badge
                                         variant="outline"
@@ -473,7 +469,7 @@ export function WeeklyTimetable({
                                         <MapPin size={10} className="text-slate-400" />
                                         <span className="truncate max-w-[90px]">{course.salle?.nom || "N/A"}</span>
                                       </Badge>
-                                      
+
                                       {course.rattrapage_id && (
                                         <span className="text-[8px] md:text-[9px] font-bold text-amber-700 bg-amber-100/60 px-1.5 py-0.5 rounded uppercase tracking-wider">
                                           Rattrapage
@@ -487,14 +483,15 @@ export function WeeklyTimetable({
                           );
                         })
                       )}
-                  </tr>
-                ); })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}
         </CardContent>
       </Card>
-      
+
       {/* CSS style targeting print layout specifically */}
       <style jsx global>{`
         #timetable-capture-container {

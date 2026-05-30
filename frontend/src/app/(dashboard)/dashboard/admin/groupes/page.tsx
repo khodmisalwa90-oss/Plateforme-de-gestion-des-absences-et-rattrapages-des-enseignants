@@ -4,10 +4,10 @@ import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { toast } from "sonner";
-import { 
-  Plus, 
-  Search, 
-  Pencil, 
+import {
+  Plus,
+  Search,
+  Pencil,
   Trash2,
   Users,
   GraduationCap
@@ -48,10 +48,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { 
-  getGroupes, 
-  createGroupe, 
-  updateGroupe, 
+import {
+  getGroupes,
+  createGroupe,
+  updateGroupe,
   deleteGroupe,
   getGroupesByDepartement
 } from "@/lib/api/groupes";
@@ -157,7 +157,7 @@ export default function GroupesPage() {
     }
   }, [fetchGroupes, search, selectedDeptFilter, status, role]);
 
-  const isAuthorized = 
+  const isAuthorized =
     status === "authenticated" && (
       (pathname.startsWith("/dashboard/admin") && ["admin_systeme", "administration"].includes(role)) ||
       (pathname.startsWith("/dashboard/enseignant") && role === "enseignant")
@@ -218,7 +218,7 @@ export default function GroupesPage() {
 
   const handleDelete = async () => {
     if (!selectedGroupe) return;
-    
+
     try {
       setIsSubmitting(true);
       await deleteGroupe(selectedGroupe.id);
@@ -319,7 +319,7 @@ export default function GroupesPage() {
                     <TableCell className="font-medium text-slate-500">#{groupe.id}</TableCell>
                     <TableCell className="font-semibold text-slate-700">{groupe.nom}</TableCell>
                     <TableCell>
-                        {groupe.departement?.nom || "Non spécifié"}
+                      {groupe.departement?.nom || "Non spécifié"}
                     </TableCell>
                     <TableCell className="text-slate-500">
                       {formatDate(groupe.created_at, false)}
@@ -414,13 +414,13 @@ export default function GroupesPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. Le groupe sera définitivement supprimé. 
+              Cette action est irréversible. Le groupe sera définitivement supprimé.
               Attention, la suppression échouera si le groupe est utilisé dans l'emploi du temps.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isSubmitting}>Annuler</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={(e) => {
                 e.preventDefault();
                 handleDelete();

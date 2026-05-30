@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, GraduationCap } from "lucide-react";
 import Container from "./Container";
-import { Button } from "./Button";
+import { Button } from "@/components/ui/Button";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +24,7 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">  
             <span className="font-poppins font-bold text-xl text-primary tracking-tight">
-              Lo<span className="text-slate-primary">Go</span>
+              <Image src="/logo.png" alt="Logo" width={65} height={65} />
             </span>
           </Link>
 

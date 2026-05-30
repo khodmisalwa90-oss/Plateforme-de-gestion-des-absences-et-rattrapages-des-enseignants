@@ -73,9 +73,9 @@ export function GroupeForm({ initialData, departments, onSubmit, onCancel, isLoa
         <Input
           id="nom"
           placeholder="Ex: LSI-S1"
-          {...register("nom", { 
-            required: "Le nom du groupe est requis", 
-            maxLength: { value: 100, message: "Le nom ne peut pas dépasser 100 caractères" } 
+          {...register("nom", {
+            required: "Le nom du groupe est requis",
+            maxLength: { value: 100, message: "Le nom ne peut pas dépasser 100 caractères" }
           })}
           disabled={isLoading}
         />
@@ -84,8 +84,8 @@ export function GroupeForm({ initialData, departments, onSubmit, onCancel, isLoa
 
       <div className="space-y-2">
         <Label htmlFor="departement_id">Département <span className="text-red-500">*</span></Label>
-        <Select 
-          value={selectedDeptId} 
+        <Select
+          value={selectedDeptId}
           onValueChange={handleSelectChange}
           disabled={isLoading}
         >
@@ -102,9 +102,9 @@ export function GroupeForm({ initialData, departments, onSubmit, onCancel, isLoa
             ))}
           </SelectContent>
         </Select>
-        <input 
-          type="hidden" 
-          {...register("departement_id", { required: "Le département est requis" })} 
+        <input
+          type="hidden"
+          {...register("departement_id", { required: "Le département est requis" })}
         />
         {errors.departement_id && <p className="text-sm text-red-500">{errors.departement_id.message}</p>}
       </div>

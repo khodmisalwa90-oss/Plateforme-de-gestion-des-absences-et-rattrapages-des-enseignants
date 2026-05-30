@@ -1,31 +1,31 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { 
-  getNotifications, 
-  markAsRead, 
-  markAllAsRead, 
-  deleteNotification 
+import {
+  getNotifications,
+  markAsRead,
+  markAllAsRead,
+  deleteNotification
 } from "@/lib/api/notifications";
 import { NotificationResponse, PaginatedResponse } from "@/types/notification";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious
 } from "@/components/ui/pagination";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -121,17 +121,17 @@ export default function NotificationsPage() {
         </TabsList>
 
         <TabsContent value="all" className="space-y-4">
-          <NotificationsTable 
-            notifications={data?.items || []} 
-            isLoading={isLoading} 
+          <NotificationsTable
+            notifications={data?.items || []}
+            isLoading={isLoading}
             onMarkRead={handleMarkAsRead}
             onDelete={handleDelete}
           />
         </TabsContent>
         <TabsContent value="unread" className="space-y-4">
-          <NotificationsTable 
-            notifications={data?.items || []} 
-            isLoading={isLoading} 
+          <NotificationsTable
+            notifications={data?.items || []}
+            isLoading={isLoading}
             onMarkRead={handleMarkAsRead}
             onDelete={handleDelete}
           />
@@ -143,15 +143,15 @@ export default function NotificationsPage() {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious 
+                <PaginationPrevious
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                 />
               </PaginationItem>
-              
+
               {Array.from({ length: data.pages }, (_, i) => i + 1).map((page) => (
                 <PaginationItem key={page}>
-                  <PaginationLink 
+                  <PaginationLink
                     isActive={page === currentPage}
                     onClick={() => setCurrentPage(page)}
                     className="cursor-pointer"
@@ -162,7 +162,7 @@ export default function NotificationsPage() {
               ))}
 
               <PaginationItem>
-                <PaginationNext 
+                <PaginationNext
                   onClick={() => setCurrentPage(p => Math.min(data.pages, p + 1))}
                   className={currentPage === data.pages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                 />
@@ -175,13 +175,13 @@ export default function NotificationsPage() {
   );
 }
 
-function NotificationsTable({ 
-  notifications, 
-  isLoading, 
-  onMarkRead, 
-  onDelete 
-}: { 
-  notifications: NotificationResponse[], 
+function NotificationsTable({
+  notifications,
+  isLoading,
+  onMarkRead,
+  onDelete
+}: {
+  notifications: NotificationResponse[],
   isLoading: boolean,
   onMarkRead: (id: number) => void,
   onDelete: (id: number) => void
@@ -222,8 +222,8 @@ function NotificationsTable({
         </TableHeader>
         <TableBody>
           {notifications.map((notif) => (
-            <TableRow 
-              key={notif.id} 
+            <TableRow
+              key={notif.id}
               className={`cursor-pointer hover:bg-muted/50 transition-colors ${!notif.est_lu ? "bg-primary/5" : ""}`}
               onClick={() => router.push(`/dashboard/notifications/${notif.id}`)}
             >
@@ -249,9 +249,9 @@ function NotificationsTable({
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
                   {!notif.est_lu && (
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       className="h-8 w-8 text-primary"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -262,9 +262,9 @@ function NotificationsTable({
                       <Check className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     className="h-8 w-8 text-destructive"
                     onClick={(e) => {
                       e.stopPropagation();

@@ -12,12 +12,12 @@ interface StatCardProps {
   className?: string;
 }
 
-export function StatCard({ 
-  title, 
-  value, 
-  icon: Icon, 
-  description, 
-  color = "text-primary", 
+export function StatCard({
+  title,
+  value,
+  icon: Icon,
+  description,
+  color = "text-primary",
   bg = "bg-primary/5",
   className
 }: StatCardProps) {

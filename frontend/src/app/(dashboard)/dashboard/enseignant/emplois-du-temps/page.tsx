@@ -19,11 +19,11 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 export default function TeacherTimetablePage() {
   const { data: session } = useSession();
   const userId = session?.user?.id;
-  
+
   const [activeTab, setActiveTab] = useState("personnel");
   const [matieres, setMatieres] = useState<MatiereResponse[]>([]);
   const [selectedMatiereId, setSelectedMatiereId] = useState<string>("");
-  
+
   const [courses, setCourses] = useState<EmploiDuTempsResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

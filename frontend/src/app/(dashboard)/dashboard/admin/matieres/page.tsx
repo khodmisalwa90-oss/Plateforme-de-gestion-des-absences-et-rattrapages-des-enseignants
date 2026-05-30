@@ -4,10 +4,10 @@ import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { 
-  Plus, 
-  Search, 
-  Pencil, 
+import {
+  Plus,
+  Search,
+  Pencil,
   Trash2,
   BookOpen
 } from "lucide-react";
@@ -39,10 +39,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import { 
-  getMatieres, 
-  createMatiere, 
-  updateMatiere, 
+import {
+  getMatieres,
+  createMatiere,
+  updateMatiere,
   deleteMatiere,
   getMatieresByEnseignant
 } from "@/lib/api/matieres";
@@ -71,7 +71,7 @@ export default function MatieresAdminPage() {
   const [matieres, setMatieres] = useState<MatiereResponse[]>([]);
   const [departments, setDepartments] = useState<DepartementResponse[]>([]);
   const [teachers, setTeachers] = useState<UtilisateurResponse[]>([]);
-  
+
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [perPage, setPageSize] = useState(10);
@@ -198,7 +198,7 @@ export default function MatieresAdminPage() {
 
   const handleDelete = async () => {
     if (!selectedMatiere) return;
-    
+
     try {
       setIsSubmitting(true);
       await deleteMatiere(selectedMatiere.id);
@@ -257,9 +257,9 @@ export default function MatieresAdminPage() {
                   {selectedTeacherFilter === "all"
                     ? "Tous les enseignants"
                     : (() => {
-                        const t = teachers.find(teacher => teacher.id.toString() === selectedTeacherFilter);
-                        return t ? `${t.nom} ${t.prenom}` : "Filtrer par enseignant";
-                      })()
+                      const t = teachers.find(teacher => teacher.id.toString() === selectedTeacherFilter);
+                      return t ? `${t.nom} ${t.prenom}` : "Filtrer par enseignant";
+                    })()
                   }
                 </SelectValue>
               </SelectTrigger>
@@ -407,13 +407,13 @@ export default function MatieresAdminPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. La matière sera définitivement supprimée. 
+              Cette action est irréversible. La matière sera définitivement supprimée.
               Attention, cette suppression peut affecter les autres entités associées (ex: absences, rattrapages, groupes).
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isSubmitting}>Annuler</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={(e) => {
                 e.preventDefault();
                 handleDelete();

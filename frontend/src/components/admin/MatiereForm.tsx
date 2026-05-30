@@ -25,13 +25,13 @@ interface MatiereFormProps {
   isLoading: boolean;
 }
 
-export function MatiereForm({ 
-  initialData, 
-  departments, 
-  teachers, 
-  onSubmit, 
-  onCancel, 
-  isLoading 
+export function MatiereForm({
+  initialData,
+  departments,
+  teachers,
+  onSubmit,
+  onCancel,
+  isLoading
 }: MatiereFormProps) {
   const [selectedDeptId, setSelectedDeptId] = useState<string>("");
   const [selectedTeacherId, setSelectedTeacherId] = useState<string>("");
@@ -110,9 +110,9 @@ export function MatiereForm({
         <Input
           id="nom"
           placeholder="Ex: Algorithmique et Structures de Données"
-          {...register("nom", { 
-            required: "Le nom de la matière est requis", 
-            maxLength: { value: 150, message: "Le nom ne peut pas dépasser 150 caractères" } 
+          {...register("nom", {
+            required: "Le nom de la matière est requis",
+            maxLength: { value: 150, message: "Le nom ne peut pas dépasser 150 caractères" }
           })}
           disabled={isLoading}
         />
@@ -122,8 +122,8 @@ export function MatiereForm({
       {/* Department Selection */}
       <div className="space-y-2">
         <Label htmlFor="departement_id">Département <span className="text-red-500">*</span></Label>
-        <Select 
-          value={selectedDeptId} 
+        <Select
+          value={selectedDeptId}
           onValueChange={handleDeptChange}
           disabled={isLoading}
         >
@@ -140,9 +140,9 @@ export function MatiereForm({
             ))}
           </SelectContent>
         </Select>
-        <input 
-          type="hidden" 
-          {...register("departement_id", { required: "Le département est requis" })} 
+        <input
+          type="hidden"
+          {...register("departement_id", { required: "Le département est requis" })}
         />
         {errors.departement_id && <p className="text-sm text-red-500">{errors.departement_id.message}</p>}
       </div>
@@ -150,8 +150,8 @@ export function MatiereForm({
       {/* Teacher Selection */}
       <div className="space-y-2">
         <Label htmlFor="enseignant_id">Enseignant</Label>
-        <Select 
-          value={selectedTeacherId} 
+        <Select
+          value={selectedTeacherId}
           onValueChange={handleTeacherChange}
           disabled={isLoading}
         >
@@ -169,9 +169,9 @@ export function MatiereForm({
             ))}
           </SelectContent>
         </Select>
-        <input 
-          type="hidden" 
-          {...register("enseignant_id")} 
+        <input
+          type="hidden"
+          {...register("enseignant_id")}
         />
       </div>
 

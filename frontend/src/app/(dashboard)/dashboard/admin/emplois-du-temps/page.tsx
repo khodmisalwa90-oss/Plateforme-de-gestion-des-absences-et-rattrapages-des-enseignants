@@ -867,11 +867,10 @@ export default function AdminTimetablePage() {
                 <SelectTrigger>
                   <span className="truncate">
                     {selectedGroup
-                      ? `${selectedGroup.nom} ${
-                          selectedGroup.departement?.nom
-                            ? `(${selectedGroup.departement.nom})`
-                            : ""
-                        }`
+                      ? `${selectedGroup.nom} ${selectedGroup.departement?.nom
+                        ? `(${selectedGroup.departement.nom})`
+                        : ""
+                      }`
                       : "Sélectionner un groupe..."}
                   </span>
                 </SelectTrigger>
@@ -896,11 +895,10 @@ export default function AdminTimetablePage() {
                 <SelectTrigger>
                   <span className="truncate">
                     {selectedMatiere
-                      ? `${selectedMatiere.nom} ${
-                          selectedMatiere.enseignant
-                            ? `(Pr. ${selectedMatiere.enseignant.nom})`
-                            : ""
-                        }`
+                      ? `${selectedMatiere.nom} ${selectedMatiere.enseignant
+                        ? `(Pr. ${selectedMatiere.enseignant.nom})`
+                        : ""
+                      }`
                       : "Sélectionner une matière..."}
                   </span>
                 </SelectTrigger>
@@ -942,8 +940,8 @@ export default function AdminTimetablePage() {
       {(activeTab === "groupe"
         ? selectedGroupId
         : activeTab === "matiere"
-        ? selectedMatiereId
-        : selectedSalleId) ? (
+          ? selectedMatiereId
+          : selectedSalleId) ? (
         loadingTimetable ? (
           <LoadingSpinner className="min-h-[40vh]" />
         ) : error ? (
@@ -954,14 +952,12 @@ export default function AdminTimetablePage() {
             viewType={activeTab as "groupe" | "matiere" | "salle"}
             title={
               activeTab === "groupe"
-                ? `Emploi du temps - Groupe : ${
-                    selectedGroup?.nom || "Groupe"
-                  }`
+                ? `Emploi du temps - Groupe : ${selectedGroup?.nom || "Groupe"
+                }`
                 : activeTab === "matiere"
-                ? `Emploi du temps - Matière : ${
-                    selectedMatiere?.nom || "Matière"
+                  ? `Emploi du temps - Matière : ${selectedMatiere?.nom || "Matière"
                   }`
-                : `Emploi du temps - Salle : ${selectedSalle?.nom || "Salle"}`
+                  : `Emploi du temps - Salle : ${selectedSalle?.nom || "Salle"}`
             }
             subtitle={
               activeTab === "groupe"
@@ -969,10 +965,10 @@ export default function AdminTimetablePage() {
                   ? `Département : ${selectedGroup.departement.nom}`
                   : ""
                 : activeTab === "matiere"
-                ? selectedMatiere?.departement?.nom
-                  ? `Département : ${selectedMatiere.departement.nom}`
+                  ? selectedMatiere?.departement?.nom
+                    ? `Département : ${selectedMatiere.departement.nom}`
+                    : ""
                   : ""
-                : ""
             }
             onEdit={handleEditOpen}
             onDelete={handleDeleteOpen}

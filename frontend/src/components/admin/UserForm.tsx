@@ -48,7 +48,7 @@ export function UserForm({ user, onSubmit, isLoading }: UserFormProps) {
       form.setError("mot_de_passe", { message: "Le mot de passe est requis pour la création." });
       return;
     }
-    
+
     const submitData = { ...values };
     if (isEditing && !submitData.mot_de_passe) {
       delete submitData.mot_de_passe;

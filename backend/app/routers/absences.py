@@ -118,14 +118,14 @@ def update_absence(
         try:
             update_data["matiere_id"] = int(matiere_id)
         except ValueError:
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="matiere_id must be an integer")
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="matiere_id doit être un entier")
             
     if date_absence is not None and date_absence.strip() != "":
         try:
             from datetime import date
             update_data["date_absence"] = date.fromisoformat(date_absence)
         except ValueError:
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="date_absence must be a valid date (YYYY-MM-DD)")
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="date_absence doit être une date valide (AAAA-MM-JJ)")
             
     if motif is not None and motif.strip() != "":
         update_data["motif"] = motif

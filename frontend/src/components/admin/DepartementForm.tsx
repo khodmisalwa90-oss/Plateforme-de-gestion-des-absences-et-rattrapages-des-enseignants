@@ -36,9 +36,9 @@ export function DepartementForm({ initialData, onSubmit, onCancel, isLoading }: 
         <Input
           id="nom"
           placeholder="Ex: Informatique"
-          {...register("nom", { 
-            required: "Le nom est requis", 
-            maxLength: { value: 100, message: "Le nom ne peut pas dépasser 100 caractères" } 
+          {...register("nom", {
+            required: "Le nom est requis",
+            maxLength: { value: 100, message: "Le nom ne peut pas dépasser 100 caractères" }
           })}
           disabled={isLoading}
         />

@@ -8,12 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
 } from "@/components/ui/select";
 
 export default function ContactPage() {
@@ -42,7 +42,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-bold">Email</p>
-                      <p className="text-blue-100 text-sm">support@absenceflow.fr</p>
+                      <p className="text-blue-100 text-sm">contact@isett.rnu.tn</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
@@ -51,7 +51,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-bold">Téléphone</p>
-                      <p className="text-blue-100 text-sm">+33 1 23 45 67 89</p>
+                      <p className="text-blue-100 text-sm">+216 76 473 777</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
@@ -61,8 +61,9 @@ export default function ContactPage() {
                     <div>
                       <p className="font-bold">Adresse</p>
                       <p className="text-blue-100 text-sm">
-                        12 Rue de l'Université<br />
-                        75007 Paris, France
+                        Campus universitaire,<br />
+                        route de Nefta, BP 150 <br />
+                        2210 Tozeur, Tunisie
                       </p>
                     </div>
                   </li>
@@ -93,7 +94,7 @@ export default function ContactPage() {
                       <Input id="email" type="email" placeholder="jean@universite.fr" className="rounded-xl border-slate-200 shadow-sm" />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <Label htmlFor="sujet" className="text-sm font-bold text-slate-700">Objet de votre demande</Label>
                     <Select>
@@ -111,9 +112,9 @@ export default function ContactPage() {
 
                   <div className="space-y-3">
                     <Label htmlFor="message" className="text-sm font-bold text-slate-700">Votre Message</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Comment pouvons-nous vous aider ? Soyez aussi précis que possible." 
+                    <Textarea
+                      id="message"
+                      placeholder="Comment pouvons-nous vous aider ? Soyez aussi précis que possible."
                       className="min-h-[180px] rounded-xl border-slate-200 shadow-sm resize-none"
                     />
                   </div>

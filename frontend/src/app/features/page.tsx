@@ -1,13 +1,13 @@
 import React from "react";
-import { 
-  ClipboardCheck, 
-  Search, 
-  BarChart, 
-  Settings, 
-  Users, 
-  CalendarDays, 
-  BellRing, 
-  FileCheck2 
+import {
+  ClipboardCheck,
+  Search,
+  BarChart,
+  Settings,
+  Users,
+  CalendarDays,
+  BellRing,
+  FileCheck2
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -65,8 +65,8 @@ export default function FeaturesPage() {
           <div className="flex justify-center mb-12">
             <TabsList className="bg-slate-100 p-1 rounded-xl h-auto">
               {roles.map((role) => (
-                <TabsTrigger 
-                  key={role.id} 
+                <TabsTrigger
+                  key={role.id}
                   value={role.id}
                   className="px-8 py-3 rounded-lg data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm font-bold transition-all"
                 >

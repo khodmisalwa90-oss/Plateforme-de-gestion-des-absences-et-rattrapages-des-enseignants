@@ -18,9 +18,9 @@ export function ErrorMessage({ title = "Erreur", message, onRetry }: ErrorMessag
           {message}
           {onRetry && (
             <div className="mt-4">
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={onRetry}
                 className="bg-white border-red-200 text-red-700 hover:bg-red-100 hover:text-red-800 gap-2"
               >

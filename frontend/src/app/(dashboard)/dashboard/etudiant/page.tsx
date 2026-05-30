@@ -99,10 +99,10 @@ function parseDateForBadge(dateStr: string) {
       month: "long",
       day: "numeric",
     });
-    return { 
-      day: dayStr, 
-      month: monthStr.replace(".", ""), 
-      fullDate: fullDate.charAt(0).toUpperCase() + fullDate.slice(1) 
+    return {
+      day: dayStr,
+      month: monthStr.replace(".", ""),
+      fullDate: fullDate.charAt(0).toUpperCase() + fullDate.slice(1)
     };
   } catch {
     return { day: dateStr, month: "", fullDate: dateStr };
@@ -186,14 +186,14 @@ export default function StudentDashboard() {
 
       {/* 3-column donut chart grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Donut 1: Volume Hebdomadaire */}
         <Card className="border-none shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-bold text-slate-800">Planning Hebdomadaire</CardTitle>
             <CardDescription className="text-xs">
-              {stats.cours?.groupes_appartenance?.length 
-                ? `Groupes : ${stats.cours.groupes_appartenance.join(", ")}` 
+              {stats.cours?.groupes_appartenance?.length
+                ? `Groupes : ${stats.cours.groupes_appartenance.join(", ")}`
                 : "Séances planifiées pour cette semaine"}
             </CardDescription>
           </CardHeader>
@@ -232,7 +232,7 @@ export default function StudentDashboard() {
                 </PieChart>
               </ChartContainer>
             </div>
-            
+
             <div className="w-full sm:w-1/2 space-y-3">
               {volumePieData.map((item) => {
                 const config = volumePieConfig[item.name as keyof typeof volumePieConfig];
@@ -295,7 +295,7 @@ export default function StudentDashboard() {
                 </PieChart>
               </ChartContainer>
             </div>
-            
+
             <div className="w-full sm:w-1/2 space-y-3">
               {absencesPieData.map((item) => {
                 const config = absencesPieConfig[item.name as keyof typeof absencesPieConfig];
@@ -358,7 +358,7 @@ export default function StudentDashboard() {
                 </PieChart>
               </ChartContainer>
             </div>
-            
+
             <div className="w-full sm:w-1/2 space-y-3">
               {rattrapagesPieData.map((item) => {
                 const config = rattrapagesPieConfig[item.name as keyof typeof rattrapagesPieConfig];
@@ -384,7 +384,7 @@ export default function StudentDashboard() {
 
       {/* Main Content Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Left Column: List of Upcoming Rattrapages */}
         <Card className="border-none shadow-sm lg:col-span-2 flex flex-col justify-between hover:shadow-md transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between pb-6">
@@ -404,8 +404,8 @@ export default function StudentDashboard() {
                 {stats.list_rattrapages_a_venir.map((item, index) => {
                   const { day, month, fullDate } = parseDateForBadge(item.date);
                   return (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50/40 hover:bg-slate-50/90 border border-slate-100/80 rounded-2xl gap-4 hover:shadow-xs transition-all duration-200"
                     >
                       <div className="flex items-center gap-4 min-w-0">

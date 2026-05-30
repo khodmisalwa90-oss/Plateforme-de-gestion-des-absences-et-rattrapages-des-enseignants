@@ -34,12 +34,12 @@ export default function Chatbot() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isActionLoading, setIsActionLoading] = useState(false);
-  
+
   const [attachedFile, setAttachedFile] = useState<{ name: string; path: string } | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   const [hasLoaded, setHasLoaded] = useState(false);
-  
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,7 +48,7 @@ export default function Chatbot() {
       const user = session.user as any;
       const storageKey = `chatbot_messages_${user.id || user.email}`;
       const saved = sessionStorage.getItem(storageKey);
-      
+
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -63,10 +63,10 @@ export default function Chatbot() {
             return;
           }
         } catch (error) {
-          console.error("Failed to parse saved chat history:", error);
+          console.error("Erreur lors du chargement de l'historique de conversation:", error);
         }
       }
-      
+
       const firstName = user.prenom || "";
       const roleLabel = {
         admin_systeme: "Administrateur",
@@ -76,7 +76,7 @@ export default function Chatbot() {
       }[user.role as string] || "Utilisateur";
 
       const welcomeMsg = `Bonjour ${firstName} ! Je suis votre assistant virtuel IA. En tant que **${roleLabel}**, je peux vous aider à interroger vos cours, planifier vos rattrapages et suivre vos absences. Que puis-je faire pour vous aujourd'hui ?`;
-      
+
       const welcome = [
         {
           id: "welcome",
@@ -157,7 +157,7 @@ export default function Chatbot() {
     const storageKey = `chatbot_messages_${user.id || user.email}`;
     sessionStorage.removeItem(storageKey);
     setAttachedFile(null);
-    
+
     const firstName = user.prenom || "";
     const roleLabel = {
       admin_systeme: "Administrateur",
@@ -167,7 +167,7 @@ export default function Chatbot() {
     }[user.role as string] || "Utilisateur";
 
     const welcomeMsg = `Bonjour ${firstName} ! Je suis votre assistant virtuel IA. En tant que **${roleLabel}**, je peux vous aider à interroger vos cours, planifier vos rattrapages et suivre vos absences. Que puis-je faire pour vous aujourd'hui ?`;
-    
+
     setMessages([
       {
         id: "welcome",
@@ -259,7 +259,7 @@ export default function Chatbot() {
 
   const handleConfirmAction = async (action: string, params: Record<string, any>) => {
     setIsActionLoading(true);
-    
+
     let finalParams = { ...params };
     const confirmMessage = messages.find(m => m.type === "confirmation" && m.actionData?.action === action);
     if (confirmMessage && (confirmMessage as any).tempAttachment && action === "declare_absence") {
@@ -268,7 +268,7 @@ export default function Chatbot() {
 
     try {
       const response = await confirmChatBotAction(action, finalParams);
-      
+
       setMessages((prev) => {
         return prev.map((msg) => {
           if (msg.type === "confirmation") {
@@ -287,14 +287,14 @@ export default function Chatbot() {
 
       setMessages((prev) => [...prev, botMsg]);
       toast.success("Action exécutée avec succès");
-      
+
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("refreshDashboardData"));
       }
 
     } catch (error: any) {
       toast.error(error.message || "Erreur lors de la validation de l'action");
-      
+
       const botMsg: ChatMessageType = {
         id: crypto.randomUUID(),
         role: "assistant",
@@ -364,7 +364,7 @@ export default function Chatbot() {
                 </SheetDescription>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-1.5">
               <Button
                 variant="ghost"
@@ -388,7 +388,7 @@ export default function Chatbot() {
                 isActionLoading={isActionLoading}
               />
             ))}
-            
+
             {isLoading && (
               <div className="flex w-full gap-3 py-2 items-center justify-start animate-pulse">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-600">
@@ -400,7 +400,7 @@ export default function Chatbot() {
                 </div>
               </div>
             )}
-            
+
             <div ref={scrollRef} className="h-1" />
           </div>
 
@@ -440,7 +440,7 @@ export default function Chatbot() {
                 accept=".pdf,.png,.jpg,.jpeg"
                 className="hidden"
               />
-              
+
               <Button
                 type="button"
                 variant="ghost"

@@ -1,10 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 import os
 from app.models import *
 from app.core.database import Base, engine
 from app.routers import auth, utilisateurs, departements, groupes, matieres, salles, emplois_du_temps, absences, rattrapages, dashboard, notifications, chatbot
+from app.utils.validation import translate_validation_errors
 
 Base.metadata.create_all(bind=engine)
 
@@ -14,6 +17,15 @@ app = FastAPI(
     title="Gestion des Absences et Rattrapages des Enseignants",
     version="1.0.0"
 )
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc: RequestValidationError):
+    translated_errors = [translate_validation_errors(err) for err in exc.errors()]
+    return JSONResponse(
+        status_code=422,
+        content={"detail": translated_errors}
+    )
+
 
 app.mount("/uploads", StaticFiles(directory="./uploads/justificatifs"), name="uploads")
 

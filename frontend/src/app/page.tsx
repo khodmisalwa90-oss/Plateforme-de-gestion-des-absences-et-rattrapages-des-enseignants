@@ -1,14 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import { 
-  Calendar, 
-  Bell, 
-  BarChart3, 
-  Users, 
-  ArrowRight, 
-  CheckCircle2, 
-  Clock, 
-  FileText 
+import {
+  Calendar,
+  Bell,
+  BarChart3,
+  Users,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  FileText
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -49,7 +49,7 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-            
+
             <div className="hidden lg:block relative">
               <div className="bg-gradient-to-tr from-primary to-secondary rounded-3xl p-4 shadow-2xl rotate-2">
                 <div className="bg-white rounded-2xl p-8 -rotate-2">
@@ -126,7 +126,7 @@ export default function HomePage() {
           <div className="text-center text-white relative z-10">
             <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">Prêt à moderniser votre établissement ?</h2>
             <p className="text-blue-100 text-lg mb-12 max-w-2xl mx-auto">
-              Rejoignez les dizaines d'universités qui optimisent déjà leur gestion académique avec AbsenceFlow.
+              Rejoignez les dizaines d'universités qui optimisent déjà leur gestion académique avec GestionAbsences
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button size="lg" className="bg-white text-primary hover:bg-slate-100 border-none px-10 h-14 text-lg">

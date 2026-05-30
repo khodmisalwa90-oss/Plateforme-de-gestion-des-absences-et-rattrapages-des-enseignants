@@ -3,6 +3,7 @@ import Link from "next/link";
 import { GraduationCap, Mail, Phone, MapPin } from "lucide-react";
 import Container from "./Container";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,7 +16,7 @@ const Footer = () => {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-2 group w-fit">
               <span className="font-poppins font-bold text-xl text-white tracking-tight">
-                Lo<span className="text-primary-light">Go</span>
+                <Image src="/logo.png" alt="Logo" width={65} height={65} />
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
@@ -58,15 +59,15 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Mail size={16} className="text-primary-light" />
-                contact@absenceflow.univ.fr
+                contact@isett.rnu.tn
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Phone size={16} className="text-primary-light" />
-                +33 1 23 45 67 89
+                +216 76 473 777
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <MapPin size={16} className="text-primary-light" />
-                Université de Paris, France
+                Campus universitaire, route de Nefta, BP 150 - 2210 Tozeur
               </li>
             </ul>
           </div>
@@ -75,7 +76,7 @@ const Footer = () => {
         <Separator className="bg-white/10" />
 
         <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] uppercase tracking-widest">
-          <p>© {currentYear} AbsenceFlow. Tous droits réservés.</p>
+          <p>© {currentYear} GestionAbsences. Tous droits réservés.</p>
           <div className="flex gap-8">
             <Link href="#" className="hover:text-white transition-colors">Mentions Légales</Link>
             <Link href="#" className="hover:text-white transition-colors">Confidentialité</Link>

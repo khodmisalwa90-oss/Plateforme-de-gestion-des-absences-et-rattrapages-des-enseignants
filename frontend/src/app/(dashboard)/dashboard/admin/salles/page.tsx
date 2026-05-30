@@ -4,10 +4,10 @@ import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { 
-  Plus, 
-  Search, 
-  Pencil, 
+import {
+  Plus,
+  Search,
+  Pencil,
   Trash2,
   Building2,
   Clock,
@@ -43,10 +43,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import { 
-  getSalles, 
-  createSalle, 
-  updateSalle, 
+import {
+  getSalles,
+  createSalle,
+  updateSalle,
   deleteSalle,
   getAvailableSalles
 } from "@/lib/api/salles";
@@ -74,7 +74,7 @@ export default function SallesAdminPage() {
   const [checkDate, setCheckDate] = useState("");
   const [checkHeureDebut, setCheckHeureDebut] = useState("");
   const [checkHeureFin, setCheckHeureFin] = useState("");
-  
+
   const [availableSalles, setAvailableSalles] = useState<SalleResponse[]>([]);
   const [availTotal, setAvailTotal] = useState(0);
   const [availPage, setAvailPage] = useState(1);
@@ -202,7 +202,7 @@ export default function SallesAdminPage() {
 
   const handleDelete = async () => {
     if (!selectedSalle) return;
-    
+
     try {
       setIsSubmitting(true);
       await deleteSalle(selectedSalle.id);
@@ -234,21 +234,19 @@ export default function SallesAdminPage() {
       <div className="flex gap-2 p-1 bg-slate-100 rounded-lg w-fit">
         <button
           onClick={() => setActiveTab("list")}
-          className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
-            activeTab === "list"
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === "list"
               ? "bg-white text-slate-800 shadow-sm"
               : "text-slate-500 hover:text-slate-800 hover:bg-white/50"
-          }`}
+            }`}
         >
           Gestion des salles
         </button>
         <button
           onClick={() => setActiveTab("search")}
-          className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
-            activeTab === "search"
+          className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === "search"
               ? "bg-white text-slate-800 shadow-sm"
               : "text-slate-500 hover:text-slate-800 hover:bg-white/50"
-          }`}
+            }`}
         >
           Rechercher une salle disponible
         </button>
@@ -256,7 +254,7 @@ export default function SallesAdminPage() {
 
       {/* Main Container */}
       <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 space-y-6">
-        
+
         {/* CRUD LIST TAB */}
         {activeTab === "list" && (
           <div className="space-y-6">
@@ -386,7 +384,7 @@ export default function SallesAdminPage() {
               <p className="text-sm text-slate-500">
                 Entrez une date et une plage horaire pour trouver toutes les salles libres.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                 <div className="space-y-2">
                   <Label htmlFor="checkDate">Date <span className="text-red-500">*</span></Label>
@@ -426,8 +424,8 @@ export default function SallesAdminPage() {
               </div>
 
               <div className="flex justify-end pt-2">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="bg-primary hover:bg-primary/90 text-white min-w-[150px]"
                   disabled={isAvailLoading}
                 >
@@ -545,13 +543,13 @@ export default function SallesAdminPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. La salle sera définitivement supprimée. 
+              Cette action est irréversible. La salle sera définitivement supprimée.
               Attention, cette suppression peut échouer si des rattrapages futurs sont déjà planifiés dans cette salle.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isSubmitting}>Annuler</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={(e) => {
                 e.preventDefault();
                 handleDelete();

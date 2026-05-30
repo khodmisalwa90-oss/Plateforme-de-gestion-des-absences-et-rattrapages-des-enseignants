@@ -14,11 +14,11 @@ interface SalleFormProps {
   isLoading: boolean;
 }
 
-export function SalleForm({ 
-  initialData, 
-  onSubmit, 
-  onCancel, 
-  isLoading 
+export function SalleForm({
+  initialData,
+  onSubmit,
+  onCancel,
+  isLoading
 }: SalleFormProps) {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateSallePayload>({
     defaultValues: {
@@ -49,9 +49,9 @@ export function SalleForm({
         <Input
           id="nom"
           placeholder="Ex: Amphi A, Salle B102"
-          {...register("nom", { 
-            required: "Le nom de la salle est requis", 
-            maxLength: { value: 100, message: "Le nom ne peut pas dépasser 100 caractères" } 
+          {...register("nom", {
+            required: "Le nom de la salle est requis",
+            maxLength: { value: 100, message: "Le nom ne peut pas dépasser 100 caractères" }
           })}
           disabled={isLoading}
         />
@@ -65,8 +65,8 @@ export function SalleForm({
           id="capacite"
           type="number"
           placeholder="Ex: 50"
-          {...register("capacite", { 
-            required: "La capacité est requise", 
+          {...register("capacite", {
+            required: "La capacité est requise",
             valueAsNumber: true,
             min: { value: 1, message: "La capacité doit être au moins 1" }
           })}

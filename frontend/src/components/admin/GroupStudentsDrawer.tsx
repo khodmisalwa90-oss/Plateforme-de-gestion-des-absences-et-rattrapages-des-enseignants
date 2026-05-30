@@ -2,9 +2,9 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
-import { 
-  Search, 
-  UserMinus, 
+import {
+  Search,
+  UserMinus,
   UserPlus,
   Users,
   Loader2,
@@ -106,7 +106,7 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
     try {
       setIsSelectorLoading(true);
       const res = await getUsers(1, 100, { role: "etudiant" });
-      
+
       const currentIds = students.map(s => s.id);
       const available = res.items.filter(s => !currentIds.includes(s.id));
       setAllStudents(available);
@@ -118,7 +118,7 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
   };
 
   const toggleSelectStudent = (id: number) => {
-    setSelectedStudentIds(prev => 
+    setSelectedStudentIds(prev =>
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   };
@@ -148,11 +148,11 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
           })
           .filter(Boolean)
           .join(", ");
-        
-        const message = conflictNames 
+
+        const message = conflictNames
           ? `${detail.message} (Étudiant(s) concerné(s) : ${conflictNames})`
           : detail.message;
-        
+
         toast.error(message, { duration: 6000 });
       } else {
         toast.error(error.message || "Erreur lors de l'ajout des étudiants");
@@ -162,7 +162,7 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
     }
   };
 
-  const filteredAllStudents = allStudents.filter(s => 
+  const filteredAllStudents = allStudents.filter(s =>
     `${s.nom} ${s.prenom} ${s.email}`.toLowerCase().includes(selectorSearch.toLowerCase())
   );
 
@@ -176,7 +176,7 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
             </SheetTitle>
             {group && (
               <SheetDescription className="text-slate-500 text-sm mt-2">
-                Groupe: <span className="font-semibold text-slate-700">{group.nom}</span> 
+                Groupe: <span className="font-semibold text-slate-700">{group.nom}</span>
                 {group.departement && (
                   <span> | Département: <span className="font-semibold text-slate-700">{group.departement.nom}</span></span>
                 )}
@@ -188,9 +188,9 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-slate-700">Liste des étudiants ({total})</h3>
               {canManage && (
-                <Button 
-                  onClick={handleOpenSelector} 
-                  size="sm" 
+                <Button
+                  onClick={handleOpenSelector}
+                  size="sm"
                   className="bg-primary hover:bg-primary/90 text-xs font-semibold"
                 >
                   <UserPlus className="h-4 w-4 mr-1.5" />
@@ -318,17 +318,16 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
                   {filteredAllStudents.map((student) => {
                     const isSelected = selectedStudentIds.includes(student.id);
                     return (
-                      <div 
+                      <div
                         key={student.id}
                         onClick={() => toggleSelectStudent(student.id)}
-                        className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-50 transition-colors ${
-                          isSelected ? "bg-primary/5" : ""
-                        }`}
+                        className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-50 transition-colors ${isSelected ? "bg-primary/5" : ""
+                          }`}
                       >
                         <input
                           type="checkbox"
                           checked={isSelected}
-                          onChange={() => {}} // Handled by div onClick
+                          onChange={() => { }} // Handled by div onClick
                           className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer"
                         />
                         <div className="flex-1">
@@ -350,8 +349,8 @@ export function GroupStudentsDrawer({ isOpen, onClose, group, userRole }: GroupS
               {selectedStudentIds.length} sélectionné(s)
             </p>
             <div className="flex gap-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setIsSelectorOpen(false)}
                 disabled={isSubmitting}
               >

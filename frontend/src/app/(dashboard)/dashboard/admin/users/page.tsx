@@ -4,71 +4,71 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import { 
-  getUsers, 
-  createUser, 
-  updateUser, 
-  deleteUser, 
-  activateUser, 
-  deactivateUser 
+import {
+  getUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  activateUser,
+  deactivateUser
 } from "@/lib/api/users";
-import { 
-  PaginatedUserResponse, 
+import {
+  PaginatedUserResponse,
   UtilisateurResponse,
   CreateUserPayload,
   UpdateUserPayload
 } from "@/types/user";
-import { 
-  Table, 
-  TableHeader, 
-  TableRow, 
-  TableHead, 
-  TableBody, 
-  TableCell 
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
 } from "@/components/ui/select";
-import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationNext, 
-  PaginationPrevious 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious
 } from "@/components/ui/pagination";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogTrigger 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
 } from "@/components/ui/dialog";
-import { 
-  AlertDialog, 
-  AlertDialogAction, 
-  AlertDialogCancel, 
-  AlertDialogContent, 
-  AlertDialogDescription, 
-  AlertDialogFooter, 
-  AlertDialogHeader, 
-  AlertDialogTitle 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { UserForm } from "@/components/admin/UserForm";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
-import { 
-  Plus, 
-  Pencil, 
-  Trash2, 
-  Search, 
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Search,
   UserCheck,
   UserX
 } from "lucide-react";
@@ -215,8 +215,8 @@ export default function UsersManagementPage() {
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto px-1">
-      <DashboardHeader 
-        title="Gestion des Utilisateurs" 
+      <DashboardHeader
+        title="Gestion des Utilisateurs"
         subtitle="Gérez les comptes, les rôles et les accès à la plateforme."
       >
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
@@ -230,10 +230,10 @@ export default function UsersManagementPage() {
                 {editingUser ? "Modifier l'utilisateur" : "Créer un utilisateur"}
               </DialogTitle>
             </DialogHeader>
-            <UserForm 
-              user={editingUser} 
-              onSubmit={handleFormSubmit} 
-              isLoading={isSubmitting} 
+            <UserForm
+              user={editingUser}
+              onSubmit={handleFormSubmit}
+              isLoading={isSubmitting}
             />
           </DialogContent>
         </Dialog>
@@ -361,14 +361,14 @@ export default function UsersManagementPage() {
         <Pagination className="mt-6">
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious 
+              <PaginationPrevious
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
               />
             </PaginationItem>
             {Array.from({ length: data.total_pages }, (_, i) => i + 1).map((page) => (
               <PaginationItem key={page}>
-                <PaginationLink 
+                <PaginationLink
                   isActive={page === currentPage}
                   onClick={() => setCurrentPage(page)}
                   className="cursor-pointer"
@@ -378,7 +378,7 @@ export default function UsersManagementPage() {
               </PaginationItem>
             ))}
             <PaginationItem>
-              <PaginationNext 
+              <PaginationNext
                 onClick={() => setCurrentPage(p => Math.min(data.total_pages, p + 1))}
                 className={currentPage === data.total_pages ? "pointer-events-none opacity-50" : "cursor-pointer"}
               />

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -85,9 +86,9 @@ export default function LoginForm() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="mot_de_passe">Mot de passe</Label>
-              <Button variant="link" className="px-0 font-normal text-xs text-primary" type="button">
+              <Link href="/forgot-password" className="text-xs text-primary hover:underline font-normal">
                 Mot de passe oublié ?
-              </Button>
+              </Link>
             </div>
             <div className="relative">
               <Input

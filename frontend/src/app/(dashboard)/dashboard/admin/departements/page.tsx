@@ -1,17 +1,17 @@
 "use client";
- 
+
 import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { 
-  Plus, 
-  Search, 
-  Pencil, 
+import {
+  Plus,
+  Search,
+  Pencil,
   Trash2,
   Building
 } from "lucide-react";
- 
+
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import {
@@ -38,24 +38,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
- 
-import { 
-  getDepartements, 
-  createDepartement, 
-  updateDepartement, 
-  deleteDepartement 
+
+import {
+  getDepartements,
+  createDepartement,
+  updateDepartement,
+  deleteDepartement
 } from "@/lib/api/departements";
 import { DepartementResponse } from "@/types/departement";
 import { DepartementForm } from "@/components/admin/DepartementForm";
 import { formatDate } from "@/utils/dateUtils";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
- 
+
 export default function DepartementsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const user = session?.user as any;
   const role = user?.role;
- 
+
   const [departements, setDepartements] = useState<DepartementResponse[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -63,12 +63,12 @@ export default function DepartementsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
- 
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedDept, setSelectedDept] = useState<DepartementResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
- 
+
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
@@ -76,7 +76,7 @@ export default function DepartementsPage() {
       router.push("/dashboard");
     }
   }, [status, role, router]);
- 
+
   const fetchDepartements = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -90,17 +90,17 @@ export default function DepartementsPage() {
       setIsLoading(false);
     }
   }, [page, perPage, search]);
- 
+
   useEffect(() => {
     if (status === "authenticated" && ["admin_systeme", "administration"].includes(role)) {
       const delayDebounceFn = setTimeout(() => {
         fetchDepartements();
       }, 500);
- 
+
       return () => clearTimeout(delayDebounceFn);
     }
   }, [fetchDepartements, search, status, role]);
- 
+
   if (status === "loading" || !["admin_systeme", "administration"].includes(role)) {
     return (
       <div className="flex h-full items-center justify-center p-8">
@@ -108,24 +108,24 @@ export default function DepartementsPage() {
       </div>
     );
   }
- 
+
   const isAdminSysteme = role === "admin_systeme";
- 
+
   const handleOpenCreate = () => {
     setSelectedDept(null);
     setIsFormOpen(true);
   };
- 
+
   const handleOpenEdit = (dept: DepartementResponse) => {
     setSelectedDept(dept);
     setIsFormOpen(true);
   };
- 
+
   const handleOpenDelete = (dept: DepartementResponse) => {
     setSelectedDept(dept);
     setIsDeleteDialogOpen(true);
   };
- 
+
   const handleFormSubmit = async (data: any) => {
     try {
       setIsSubmitting(true);
@@ -144,10 +144,10 @@ export default function DepartementsPage() {
       setIsSubmitting(false);
     }
   };
- 
+
   const handleDelete = async () => {
     if (!selectedDept) return;
-    
+
     try {
       setIsSubmitting(true);
       await deleteDepartement(selectedDept.id);
@@ -160,7 +160,7 @@ export default function DepartementsPage() {
       setIsSubmitting(false);
     }
   };
- 
+
   return (
     <div className="space-y-8 max-w-7xl mx-auto px-1">
       <DashboardHeader
@@ -174,7 +174,7 @@ export default function DepartementsPage() {
           </Button>
         )}
       </DashboardHeader>
- 
+
       <div className="bg-white p-6 rounded-xl shadow-sm border-none space-y-6">
         <div className="flex items-center justify-between">
           <div className="relative w-full max-w-sm">
@@ -302,13 +302,13 @@ export default function DepartementsPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
             <AlertDialogDescription>
-              Cette action est irréversible. Le département sera définitivement supprimé. 
+              Cette action est irréversible. Le département sera définitivement supprimé.
               Attention, la suppression échouera s'il y a des groupes ou matières rattachés.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isSubmitting}>Annuler</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={(e) => {
                 e.preventDefault();
                 handleDelete();

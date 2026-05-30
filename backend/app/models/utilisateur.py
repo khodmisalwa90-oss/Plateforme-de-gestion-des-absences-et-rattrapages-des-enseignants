@@ -14,6 +14,8 @@ class Utilisateur(Base):
     mot_de_passe = Column(String(255), nullable=False)
     role = Column(SAEnum(RoleUtilisateur), nullable=False)
     actif = Column(Boolean, default=True)
+    reset_token_hash = Column(String(255), nullable=True)
+    reset_token_expires = Column(DateTime(timezone=True), nullable=True)
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())

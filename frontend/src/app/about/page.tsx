@@ -15,7 +15,7 @@ export default function AboutPage() {
           </Badge>
           <h1 className="text-4xl md:text-5xl mb-6">À propos de notre engagement</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            AbsenceFlow est née d'un constat simple : la gestion manuelle des absences et des rattrapages dans l'enseignement supérieur est source d'erreurs, de stress et de perte de temps pour tous les acteurs impliqués.
+            GestionAbsences est née d'un constat simple : la gestion manuelle des absences et des rattrapages dans l'enseignement supérieur est source d'erreurs, de stress et de perte de temps pour tous les acteurs impliqués.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function AboutPage() {
               </Card>
             ))}
           </div>
-          
+
           <Card className="aspect-square relative overflow-hidden flex items-center justify-center p-12 bg-slate-900 border-none text-white shadow-2xl rounded-[2.5rem]">
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
             <div className="text-center relative z-10">
@@ -56,12 +56,12 @@ export default function AboutPage() {
         {/* Who it's for */}
         <section className="bg-slate-950 rounded-[3rem] p-12 md:p-20 text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full -mr-32 -mt-32 blur-3xl" />
-          
+
           <div className="text-center mb-16 relative z-10">
-            <h2 className="text-3xl font-bold text-white mb-4">Pour qui avons-nous conçu AbsenceFlow ?</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Pour qui avons-nous conçu GestionAbsences ?</h2>
             <p className="text-slate-400 max-w-2xl mx-auto">Une solution modulaire adaptée à chaque profil de l'écosystème universitaire.</p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             {[
               { role: "Administration", desc: "Contrôle total sur les validations et vision globale de l'établissement." },

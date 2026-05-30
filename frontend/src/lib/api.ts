@@ -28,10 +28,23 @@ export async function fetchWithAuth<T = any>(endpoint: string, options: RequestI
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    const errorMessage = typeof errorData.detail === "object" && errorData.detail !== null
-      ? errorData.detail.message
-      : (errorData.detail || errorData.message || "Une erreur est survenue");
-    
+
+    let errorMessage = "Une erreur est survenue";
+    if (Array.isArray(errorData.detail)) {
+      errorMessage = errorData.detail
+        .map((e: any) => {
+          const field = Array.isArray(e.loc) ? e.loc[e.loc.length - 1] : null;
+          return field ? `${field}: ${e.msg}` : e.msg;
+        })
+        .join(" | ");
+    } else if (typeof errorData.detail === "string") {
+      errorMessage = errorData.detail;
+    } else if (typeof errorData.detail === "object" && errorData.detail !== null) {
+      errorMessage = errorData.detail.message || JSON.stringify(errorData.detail);
+    } else if (typeof errorData.message === "string") {
+      errorMessage = errorData.message;
+    }
+
     const error = new Error(errorMessage);
     (error as any).response = errorData;
     throw error;

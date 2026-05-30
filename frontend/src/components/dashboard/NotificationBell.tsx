@@ -69,7 +69,7 @@ export function NotificationBell() {
           </div>
         </SheetHeader>
         <Separator />
-        
+
         <div className="flex-1 min-h-0 overflow-y-auto px-6">
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-40 text-muted-foreground">
@@ -85,9 +85,8 @@ export function NotificationBell() {
                     setIsOpen(false);
                     router.push(`/dashboard/notifications/${notif.id}`);
                   }}
-                  className={`relative group p-3 rounded-lg border transition-colors cursor-pointer hover:bg-muted/50 ${
-                    !notif.est_lu ? "bg-primary/5 border-primary/20" : "bg-card border-transparent"
-                  }`}
+                  className={`relative group p-3 rounded-lg border transition-colors cursor-pointer hover:bg-muted/50 ${!notif.est_lu ? "bg-primary/5 border-primary/20" : "bg-card border-transparent"
+                    }`}
                 >
                   <div className="flex justify-between items-start mb-1">
                     <h4 className="font-semibold text-sm pr-12">{notif.titre}</h4>
